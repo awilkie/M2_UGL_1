@@ -1,0 +1,50 @@
++---------------------------------------------------------+
+|                      START                              |
+|           (User runs 'run_workflow')                    |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|                1. Load & Prepare Data                   |
+|         (utils.load_and_prepare_data)                   |
+|        - Loads CSV into Pandas DataFrame                |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|             2. Generate Code V1 (LLM)                   |
+|               (generate_chart_code)                     |
+|     - Prompt LLM with instructions & schema             |
+|     - Returns: Python code in <execute_python> tags     |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|              3. Execute Code V1                         |
+|        - Extract code from tags                         |
+|        - Exec() with 'df' in globals                    |
+|        ---> Output: chart_v1.png                        |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|           4. Reflect & Regenerate (LLM)                 |
+|         (reflect_on_image_and_regenerate)               |
+|     - Prompt LLM with image (chart_v1.png)              |
+|     - LLM critiques chart & fixes code                  |
+|     - Returns: Feedback (JSON) + Code V2                |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|              5. Execute Code V2                         |
+|        - Extract refined code                           |
+|        - Exec() with 'df' in globals                    |
+|        ---> Output: chart_v2.png                        |
++--------------------------+------------------------------+
+                           |
+                           v
++--------------------------+------------------------------+
+|                       END                               |
+|        (Returns dictionary with all artifacts)          |
++---------------------------------------------------------+
